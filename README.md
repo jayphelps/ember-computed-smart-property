@@ -23,6 +23,29 @@ App.PersonController = Ember.ObjectController.extend({
 ```
 Since the property is "smart", it will figure out what properties you use, when you use them, then watch and update things as normal.
 
+##Known Limitations
+Currently, it will only observe changes to properties you get on the `this`. (i.e. only `this.get('key')`, not `foo.get('key')`)
+
+### BAD
+```javascript
+App.Object = Ember.Object.extend({
+    exampleProp: function () {
+    	var foo = this.get('foo'),
+    	    bar = foo.get('bar');
+    }.smartProperty()
+});
+```
+### GOOD
+```javascript
+App.Object = Ember.Object.extend({
+    exampleProp: function () {
+    	var foo = this.get('foo'),
+    	    bar = this.get('foo.bar');
+    }.smartProperty()
+});
+```
+This is planned to be resolved in a future version.
+
 ##EXTEND_PROTOTYPES = false
 If you've told Ember not to extend the native prototypes, this library will honor that as well.
 
