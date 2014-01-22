@@ -9,20 +9,18 @@ Removes the need to declare what property keys your Computed Property depends on
 Usage is the same as a regular Ember.ComputedProperty except you don't provide the dependent keys as arguments.
 
 ```javascript
-App.PersonController = Ember.ObjectController.extend({
-    firstName: 'Bilbo',
-    lastName: 'Baggins',
+var Person = Ember.Object.extend({
+    firstName: null,
+    lastName: null,
+    friends: null,
 
     fullName: function () {
-    	var firstName = this.get('firstName'),
-    		lastName = this.get('lastName');
-    		
-    	return firstName + ' ' + lastName;
+        var firstName = this.get('firstName'),
+            lastName = this.get('lastName');
+
+        return firstName + ' ' + lastName;
     }.smartProperty(),
-    
-    friends: [
-        Ember.Object.create({ gender: 'female', likes: 'chinese' })
-    ],
+
     femaleFriendsWhoLikeChinese: function () {
         return this.get('friends').filter(function (friend) {
             var isFemale = (friend.get('gender') === 'female'),
@@ -31,6 +29,25 @@ App.PersonController = Ember.ObjectController.extend({
         });
     }.smartProperty()
 });
+
+var bilbo = Person.create({
+    firstName: 'Bilbo',
+    lastName: 'Baggins',
+    friends: [
+        Ember.Object.create({ gender: 'female', likes: 'chinese' })
+    ]
+});
+
+bilbo.get('fullName');
+// "Bilbo Baggins"
+
+bilbo.get('femaleFriendsWhoLikeChinese.length');
+// 1
+
+bilbo.get('friends').pushObject(Ember.Object.create({ gender: 'female', likes: 'chinese' }));
+
+bilbo.get('femaleFriendsWhoLikeChinese.length');
+// 2
 ```
 Since the property is "smart", it will figure out what properties you use, when you use them, then watch and update things as normal.
 
