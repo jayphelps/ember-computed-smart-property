@@ -6,6 +6,7 @@ Removes the need to declare what property keys your Computed Property depends on
 **Note: This is still very experimental. I have not yet tested and accounted for every situation where you get or alter a property. You've been warned.**
 
 ##Usage
+**Unlike most libraries, you must include `ember.computed-smart-property.js` BEFORE you include `ember.js`**
 Usage is the same as a regular Ember.ComputedProperty except you don't provide the dependent keys as arguments.
 
 ```javascript
