@@ -3,7 +3,7 @@ Ember.ComputedSmartProperty v0.2
 
 Removes the need to declare what property keys your Computed Property depends on.
 
-**Note: This is still very experimental. I have not yet tested and accounted for situations where you get or alter a property. You've been warned.**
+**Note: This is still very experimental. I have not yet tested and accounted for every situation where you get or alter a property. You've been warned.**
 
 ##Usage
 Usage is the same as a regular Ember.ComputedProperty except you don't provide the dependent keys as arguments.
