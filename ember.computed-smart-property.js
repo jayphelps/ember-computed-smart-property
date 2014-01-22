@@ -69,15 +69,13 @@
             Ember.NativeArray.activate();
         }
 
-        var addObserver = Ember.addObserver,
-            removeObserver = Ember.removeObserver,
-            ComputedProperty = Ember.ComputedProperty,
+        var ComputedProperty = Ember.ComputedProperty,
             ComputedSmartPropertyPrototype;
 
         function ComputedSmartProperty(func, opts) {
             var cp = this,
                 dependentKeys = Ember.A([]),
-                originalGet, props, rootContext;
+                originalGet, rootContext;
 
             var stack = [];
 
@@ -85,7 +83,6 @@
                 var ret;
                 originalGet = globalGet;
                 rootContext = this;
-                props = {};
                 
                 // Hook .get so we can know what keys the
                 // function depends on
