@@ -26,7 +26,8 @@ var Person = Ember.Object.extend({
     femaleFriendsWhoLikeChinese: function () {
         return this.get('friends').filter(function (friend) {
             var isFemale = (friend.get('gender') === 'female'),
-                likesChinese = (friend.get('likes') === 'chinese')
+                likesChinese = (friend.get('likes') === 'chinese');
+                
             return isFemale && likesChinese;
         });
     }.smartProperty()
