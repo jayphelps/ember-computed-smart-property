@@ -18,6 +18,17 @@ App.PersonController = Ember.ObjectController.extend({
     		lastName = this.get('lastName');
     		
     	return firstName + ' ' + lastName;
+    }.smartProperty(),
+    
+    friends: [
+        Ember.Object.create({ gender: 'female', likes: 'chinese' })
+    ],
+    femaleFriendsWhoLikeChinese: function () {
+        return this.get('friends').filter(function (friend) {
+            var isFemale = (friend.get('gender') === 'female'),
+                likesChinese = (friend.get('likes') === 'chinese')
+            return isFemale && likesChinese;
+        });
     }.smartProperty()
 });
 ```
