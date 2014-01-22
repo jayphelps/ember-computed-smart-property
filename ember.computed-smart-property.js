@@ -2,10 +2,9 @@
  * Ember.ComputedSmartProperty 0.2.1
  * (c) 2014 Jay Phelps
  * MIT Licensed
- * https://github.com/jayphelps/ember.computedsmartproperty
+ * https://github.com/jayphelps/ember.computed-smart-property
  * @license
  */
-
 (function () {
     window.Ember = window.Ember || {};
     Ember.config = Ember.config || {};
