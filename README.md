@@ -73,33 +73,6 @@ App.PersonController = Ember.ObjectController.extend({
 });
 ```
 
-## Ember.OVERRIDE_PROPERTY = true
-If you want to exclusively use SmartProperties, you can tell it to override the Function.prototype.property method.
-
-```javascript
-// Load ember.js first
-
-Ember.OVERRIDE_PROPERTY = true;
-
-// Now load ember.computedsmartproperty.js
-```
-
-Now you can just use it as `.property()`:
-
-```javascript
-App.PersonController = Ember.ObjectController.extend({
-    firstName: 'Bilbo',
-    lastName: 'Baggins',
-
-    fullName: function () {
-    	var firstName = this.get('firstName'),
-    		lastName = this.get('lastName');
-    		
-    	return firstName + ' ' + lastName;
-    }.property()
-});
-```
-
 ##Contributing/Issues
 Forks, pull requests and issue tickets are encouraged.
 
