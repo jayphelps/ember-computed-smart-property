@@ -1,9 +1,9 @@
-Ember.ComputedSmartProperty v0.1
+Ember.ComputedSmartProperty v0.2
 =================
 
 Removes the need to declare what property keys your Computed Property depends on.
 
-**Note: This is still very experimental. I have not yet tested and accounted for situations where you get or alter a property without using `this.get('key')`. Arrays in particular are probably not handled correctly yet. You've been warned.**
+**Note: This is still very experimental. I have not yet tested and accounted for situations where you get or alter a property. You've been warned.**
 
 ##Usage
 Usage is the same as a regular Ember.ComputedProperty except you don't provide the dependent keys as arguments.
@@ -22,29 +22,6 @@ App.PersonController = Ember.ObjectController.extend({
 });
 ```
 Since the property is "smart", it will figure out what properties you use, when you use them, then watch and update things as normal.
-
-##Known Limitations
-Currently, it will only observe changes to properties you get on the `this`. (i.e. only `this.get('key')`, not `foo.get('key')`)
-
-### BAD
-```javascript
-App.Object = Ember.Object.extend({
-    exampleProp: function () {
-    	var foo = this.get('foo'),
-    	    bar = foo.get('bar');
-    }.smartProperty()
-});
-```
-### GOOD
-```javascript
-App.Object = Ember.Object.extend({
-    exampleProp: function () {
-    	var foo = this.get('foo'),
-    	    bar = this.get('foo.bar');
-    }.smartProperty()
-});
-```
-This is planned to be resolved in a future version.
 
 ##EXTEND_PROTOTYPES = false
 If you've told Ember not to extend the native prototypes, this library will honor that as well.
