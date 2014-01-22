@@ -1,10 +1,11 @@
 /**
- * Ember.ComputedSmartProperty 0.2
+ * Ember.ComputedSmartProperty 0.2.1
  * (c) 2014 Jay Phelps
  * MIT Licensed
  * https://github.com/jayphelps/ember.computedsmartproperty
  * @license
  */
+
 (function () {
     window.Ember = window.Ember || {};
     Ember.config = Ember.config || {};
@@ -28,9 +29,26 @@
     };
 
     function setup() {
-        var originalNativeArray = Ember.NativeArray;
+        var originalNativeArray = Ember.NativeArray,
+            ArrayPrototype = Array.prototype,
+            hookedArrayMethods = {};
 
-        Ember.NativeArray = Ember.Mixin.create(originalNativeArray, {
+        function hookIterator(callback, thisArg) {
+            return this._super(function (value, idx, arr) {
+                if (objectAtHook) {
+                    objectAtHook(arr, idx, value);
+                }
+                return callback.apply(this, arguments);
+            }, thisArg);
+        }
+
+        'forEach every some filter find findIndex map reduce reduceRight'.split(' ').forEach(function (key) {
+            if (ArrayPrototype.hasOwnProperty(key)) {
+                hookedArrayMethods[key] = hookIterator;
+            }
+        });
+
+        Ember.NativeArray = Ember.Mixin.create(originalNativeArray, hookedArrayMethods, {
             objectAt: function (idx) {
                 var ret =  this._super(idx);
 
