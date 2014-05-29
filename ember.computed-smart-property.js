@@ -111,9 +111,14 @@
             }
 
             function addArrayEachDependentKey(arr, idx, value) {
-                stackIndex = stack.indexOf(arr);
+                var fullPath, stackIndex = stack.indexOf(arr);
                 if (stackIndex !== -1) {
-                    stack.push(value, stack[stackIndex + 1] + '.@each');
+                    fullPath = stack[stackIndex + 1] + '.@each';
+                    stack.push(value, fullPath);
+                }
+
+                if (fullPath && dependentKeys.indexOf(fullPath) === -1) {
+                    dependentKeys.push(fullPath);
                 }
             }
 
