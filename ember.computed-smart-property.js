@@ -41,9 +41,25 @@
             }, thisArg);
         }
 
-        'forEach every some filter find findIndex map reduce reduceRight'.split(' ').forEach(function (key) {
+        function reduceHook() {
+            var ret =  this._super.apply(this, arguments);
+
+            if (objectAtHook) {
+                objectAtHook(this, 0, ret);
+            }
+
+            return ret;
+        }
+
+        'forEach every some filter find findIndex reduceRight'.split(' ').forEach(function (key) {
             if (ArrayPrototype.hasOwnProperty(key)) {
                 hookedArrayMethods[key] = hookIterator;
+            }
+        });
+
+        'reduce map contains'.split(' ').forEach(function (key) {
+            if (ArrayPrototype.hasOwnProperty(key)) {
+                hookedArrayMethods[key] = reduceHook;
             }
         });
 

@@ -380,18 +380,21 @@ test('Array#findBy', function() {
 });
 
 test('Array#isAny', function() {
-
   var Hamster = Ember.Object.extend({
-    hasClothes: function() {
-      return this.get('clothes').isAny();
+    hasStartedChores: function() {
+      return this.get('chores').isAny('done');
     }.smartProperty()
   });
-  var hamster = Hamster.create({
-    clothes: Ember.A([])
-  });
-  equal(hamster.get('hasClothes'), false);
-  hamster.get('clothes').pushObject(true);
-  equal(hamster.get('hasClothes'), true);
+
+  var hamster = Hamster.create({chores: [
+    {name: 'cook', done: false},
+    {name: 'clean', done: false},
+    {name: 'write more unit tests', done: false}
+  ]});
+
+  equal(hamster.get('hasStartedChores'), false);
+  hamster.set('chores.lastObject.done', true);
+  equal(hamster.get('hasStartedChores'), true);
 });
 
 
@@ -418,7 +421,7 @@ test('Array#map', function() {
   var Person = Ember.Object.extend({
     childAges: function() {
       return this.get('children').map(function(child) {
-        return Ember.get('age');
+        return Ember.get(child, 'age');
       });
     }.smartProperty()
   });
